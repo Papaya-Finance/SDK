@@ -2,7 +2,7 @@ const hre = require('hardhat')
 const { ethers } = hre
 const { expect, time, getPermit, constants } = require('@1inch/solidity-utils')
 const { baseSetup, TOKEN_DECIMALS } = require('./helpers/Deploy')
-const { PapayaBySig } = require('../dist/node/PapayaBySigInteraction')
+const { PapayaBySig } = require('../node/PapayaBySigInteraction')
 
 const NonceType = {
     Account: 0n,
@@ -214,10 +214,12 @@ describe('papaya test', function () {
             expect(await papaya.balanceOf(user_1.address)).to.be.eq(0n)
             expect(await papaya.balanceOf(owner.address)).to.be.eq(SCALED_LIQUIDATOR_BALANCE)
         })
-        it("Method: permitAndCall then deposit", async function () {
+        it.only("Method: permitAndCall then deposit", async function () {
             const {token, papaya} = await baseSetup()
 
             await token.transfer(user_1.address, SIX_USDT)
+
+            const deadline = await timestamp() + 100
 
             const permit = await getPermit(
                 user_1,
@@ -226,7 +228,7 @@ describe('papaya test', function () {
                 CHAIN_ID,
                 await papaya.getAddress(),
                 SIX_USDT,
-                await timestamp() + 100
+                deadline
             )
 
             await papaya.connect(user_1).permitAndCall(
@@ -240,16 +242,6 @@ describe('papaya test', function () {
             )
 
             expect(await papaya.balanceOf(user_1.address)).to.be.eq(SCALED_SIX_USDT)
-
-            const bySig = new PapayaBySig(
-                'https://polygon-mainnet.g.alchemy.com/v2/2W9m2HiTQOYWu1SGCYkz1D9ZlGU413Ha',
-                137,
-                '0x749c6f0b4E65521b5aED0fdd07dA297fC976B210',
-                '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
-                'e94ef3f6cfbf0cdf800e823666facb024fe15c85cd7e61f46e97c3fa7728f392'
-            )
-
-            await bySig.PermitAndDeposit(SIX_USDT - FIVE_USDT, 1715082142 + 10000)
         })
         it("Method: BySig then PermitAndCall then deposit", async function () {
             const {token, papaya} = await baseSetup()

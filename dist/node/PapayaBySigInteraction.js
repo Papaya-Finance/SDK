@@ -41,7 +41,8 @@ class PapayaBySig {
         const tokenAddress = await this.token.getAddress();
         console.log(ethers_1.ethers.solidityPacked(['address', 'bytes'], [tokenAddress, permit]));
         let func = this.contract.getFunction("permitAndCall");
-        await func(ethers_1.ethers.solidityPacked(['address', 'bytes'], [await this.token.getAddress(), permit]), this.contract.interface.encodeFunctionData('deposit', [amount, false]));
+        let tx = await func(ethers_1.ethers.solidityPacked(['address', 'bytes'], [await this.token.getAddress(), permit]), this.contract.interface.encodeFunctionData('deposit', [amount, false]));
+        console.log(await tx);
         // await this.contract.connect(this.wallet).permitAndCall(
         //     ethers.solidityPacked(
         //         ['address', 'bytes'],
@@ -51,7 +52,7 @@ class PapayaBySig {
         //         amount, false
         //     ])
         // )
-        // return { tokenAddress, permit }
+        // return permit
     }
     async PermitAndBySigDeposit(amount, deadline, isPermit2 = false) {
         const nonce = (await this.contract.nonces(this.wallet.address)).toString();

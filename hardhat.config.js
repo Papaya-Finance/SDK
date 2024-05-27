@@ -1,6 +1,7 @@
 require('@nomicfoundation/hardhat-chai-matchers');
 require('@nomicfoundation/hardhat-ethers')
 require('hardhat-dependency-compiler');
+require('hardhat-tracer');
 require('@typechain/hardhat')
 require('dotenv').config();
 
