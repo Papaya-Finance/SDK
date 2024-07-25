@@ -30,7 +30,7 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         this.chainId = chainId;
     }
 
-    async bySigDeposit(amount: any, deadline: any, isPermit2 = false) {
+    async bySigDeposit(amount: bigint, deadline: bigint, isPermit2 = false) {
         const papayaContract = await this._createPapayaContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
@@ -70,7 +70,7 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return { callTraits, signature };
     }
 
-    async permitAndDeposit(amount: any, deadline: any) {
+    async permitAndDeposit(amount: bigint, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
         const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
@@ -81,8 +81,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
             await tokenContract.version(),
             this.chainId,
             await papayaContract.getAddress(),
-            amount,
-            deadline
+            amount.toString(),
+            deadline.toString()
         );
 
         let permitAndCall = papayaContract.getFunction("permitAndCall");
@@ -101,7 +101,11 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async permitAndBySigDeposit(amount: any, deadline: any, isPermit2 = false) {
+    async permitAndBySigDeposit(
+        amount: bigint,
+        deadline: bigint,
+        isPermit2 = false
+    ) {
         const papayaContract = await this._createPapayaContract();
         const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
@@ -117,8 +121,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
             await tokenContract.version(),
             this.chainId,
             await papayaContract.getAddress(),
-            amount,
-            deadline
+            amount.toString(),
+            deadline.toString()
         );
 
         const callTraits = {
@@ -167,9 +171,9 @@ export class PapayaBySigInteraction extends PapayaAbstract {
     }
 
     async bySigDepositFor(
-        to: any,
-        amount: any,
-        deadline: any,
+        to: string,
+        amount: bigint,
+        deadline: bigint,
         isPermit2 = false
     ) {
         const papayaContract = await this._createPapayaContract();
@@ -217,9 +221,9 @@ export class PapayaBySigInteraction extends PapayaAbstract {
     }
 
     async permitAndBySigDepositFor(
-        to: any,
-        amount: any,
-        deadline: any,
+        to: string,
+        amount: bigint,
+        deadline: bigint,
         isPermit2 = false
     ) {
         const papayaContract = await this._createPapayaContract();
@@ -239,8 +243,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
             await tokenContract.version(),
             this.chainId,
             await papayaContract.getAddress(),
-            amount,
-            deadline
+            amount.toString(),
+            deadline.toString()
         );
 
         const callTraits = {
@@ -289,9 +293,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async bySigWithdraw(amount: any, deadline: any) {
+    async bySigWithdraw(amount: bigint, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
-        const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
 
@@ -335,9 +338,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async bySigWithdrawTo(to: any, amount: any, deadline: any) {
+    async bySigWithdrawTo(to: string, amount: bigint, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
-        const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
 
@@ -381,7 +383,7 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async bySigPay(to: any, amount: any, deadline: any) {
+    async bySigPay(to: string, amount: bigint, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
@@ -428,13 +430,12 @@ export class PapayaBySigInteraction extends PapayaAbstract {
     }
 
     async bySigSubscribe(
-        author: any,
-        subscriptionRate: any,
-        projectId: any,
-        deadline: any
+        author: string,
+        subscriptionRate: bigint,
+        projectId: number,
+        deadline: bigint
     ) {
         const papayaContract = await this._createPapayaContract();
-        const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
 
@@ -480,9 +481,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async bySigUnsubscribe(author: any, deadline: any) {
+    async bySigUnsubscribe(author: string, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
-        const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
 
@@ -526,9 +526,8 @@ export class PapayaBySigInteraction extends PapayaAbstract {
         return tx;
     }
 
-    async bySigLiquidate(account: any, deadline: any) {
+    async bySigLiquidate(account: string, deadline: bigint) {
         const papayaContract = await this._createPapayaContract();
-        const tokenContract = await this._createTokenContract();
         const runner = await this.getRunner(this.secretKey);
         const address = await this._getAddress();
 
