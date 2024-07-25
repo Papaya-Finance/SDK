@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "commonjs",
+    "target": "ES2021",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "node",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
@@ -19,7 +19,8 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2020", "dom", "esnext"],
     "skipLibCheck": true,
-    "allowJs": true,
+    "noErrorTruncation": true,
+    "allowJs": true
   },
-  "include": ["./abi/*.json", "./node/*.ts"]
+  "include": ["src/**/*.ts", "src/abi/*.json"]
 }
