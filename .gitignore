@@ -15,3 +15,5 @@ artifacts
 /typechain-types/
 \.deps
 /deployments
+
+dist

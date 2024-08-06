@@ -7,6 +7,7 @@
     "url": ""
   },
   "license": "BUSL-1.1",
+  "main": "dist/index.js",
   "files": [
     "contracts/*.sol",
     "contracts/helpers",
@@ -22,7 +23,6 @@
     "@openzeppelin/contracts": "5.0.1",
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
-    "tsc": "^2.0.4",
     "typechain": "^8.3.2"
   },
   "devDependencies": {
@@ -50,6 +50,7 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
+    "build": "npx tsc",
     "clean": "rimraf artifacts cache coverage contracts/hardhat-dependency-compiler artifacts-zk cache-zk",
     "deploy": "hardhat deploy --network",
     "coverage": "hardhat coverage",
