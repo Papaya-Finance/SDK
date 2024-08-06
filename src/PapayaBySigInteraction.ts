@@ -5,6 +5,14 @@ import papayaABI from "./abi/Papaya.json";
 import erc20PermitABI from "./abi/ERC20Permit.json";
 import { PapayaAbstract } from "./PapayaAbstract";
 
+interface IContructor {
+    papayaAddress: `0x${string}`;
+    tokenAddress: `0x${string}`;
+    chainId: number;
+    secretKey?: `0x${string}`;
+    rpcUrl?: string;
+}
+
 export class PapayaBySigInteraction extends PapayaAbstract {
     private nonceType = {
         Account: 0n,
@@ -16,13 +24,13 @@ export class PapayaBySigInteraction extends PapayaAbstract {
     private tokenAddress: `0x${string}`;
     private secretKey: `0x${string}` | undefined;
 
-    constructor(
-        rpcUrl: string,
-        papayaAddress: `0x${string}`,
-        tokenAddress: `0x${string}`,
-        chainId: number,
-        secretKey?: `0x${string}`
-    ) {
+    constructor({
+        rpcUrl,
+        papayaAddress,
+        tokenAddress,
+        chainId,
+        secretKey,
+    }: IContructor) {
         super(rpcUrl);
         this.papayaAddress = papayaAddress;
         this.tokenAddress = tokenAddress;

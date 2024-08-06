@@ -1,25 +1,20 @@
 import { PapayaAbstract } from "./PapayaAbstract";
 import papayaABI from "./abi/Papaya.json";
 
+interface IContructor {
+    papayaAddress: `0x${string}`;
+    rpcUrl?: string;
+    secretKey?: `0x${string}`;
+}
+
 export class PapayaInteraction extends PapayaAbstract {
     private papayaAddress: `0x${string}`;
     private secretKey: `0x${string}` | undefined;
 
-    constructor(
-        rpcUrl: string,
-        papayaAddress: `0x${string}`,
-        secretKey?: `0x${string}`
-    ) {
+    constructor({ rpcUrl, papayaAddress, secretKey }: IContructor) {
         super(rpcUrl);
         this.papayaAddress = papayaAddress;
         this.secretKey = secretKey;
-    }
-
-    private async _createContract() {
-        const contract = this.getContract(papayaABI.abi, this.papayaAddress);
-        const runner = await this.getRunner(this.secretKey);
-        contract.connect(runner);
-        return contract;
     }
 
     async claimProjectId() {
@@ -99,5 +94,12 @@ export class PapayaInteraction extends PapayaAbstract {
         const contract = await this._createContract();
         let func = contract.getFunction("liquidate");
         return await func(target);
+    }
+
+    private async _createContract() {
+        const contract = this.getContract(papayaABI.abi, this.papayaAddress);
+        const runner = await this.getRunner(this.secretKey);
+        contract.connect(runner);
+        return contract;
     }
 }
