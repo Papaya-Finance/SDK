@@ -1,4 +1,4 @@
-# papaya-SDK
+# SDK
 
 ## Installation
 
@@ -9,8 +9,6 @@ npm install @papaya-finance/sdk
 ## Examples
 
 The use of interaction methods has some differences depending on the execution environment.
-
-### Examples
 
 #### Using in Browser
 
