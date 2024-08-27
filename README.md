@@ -3,7 +3,7 @@
 ## Installation
 
 ```sh
-npm install @papaya-protocol/sdk
+npm install @papaya-finance/sdk
 ```
 
 ## Examples
