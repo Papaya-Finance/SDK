@@ -1,9 +1,10 @@
+import { JsonRpcProvider } from "ethers";
 import { PapayaAbstract } from "./PapayaAbstract";
 import papayaABI from "./abi/Papaya.json";
 
 interface IContructor {
     papayaAddress: `0x${string}`;
-    rpcUrl?: string;
+    provider?: JsonRpcProvider;
     secretKey?: `0x${string}`;
 }
 
@@ -11,8 +12,8 @@ export class PapayaInteraction extends PapayaAbstract {
     private papayaAddress: `0x${string}`;
     private secretKey: `0x${string}` | undefined;
 
-    constructor({ rpcUrl, papayaAddress, secretKey }: IContructor) {
-        super(rpcUrl);
+    constructor({ provider, papayaAddress, secretKey }: IContructor) {
+        super(provider);
         this.papayaAddress = papayaAddress;
         this.secretKey = secretKey;
     }

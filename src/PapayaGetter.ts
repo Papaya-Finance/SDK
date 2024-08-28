@@ -1,17 +1,17 @@
-import { ethers } from "ethers";
+import { ethers, JsonRpcProvider } from "ethers";
 import { PapayaAbstract } from "./PapayaAbstract";
 import papayaABI from "./abi/Papaya.json";
 
 interface IContructor {
     papayaAddress: `0x${string}`;
-    rpcUrl?: string;
+    provider?: JsonRpcProvider;
 }
 
 export class PapayaGetter extends PapayaAbstract {
     private contract: ethers.Contract;
 
-    constructor({ rpcUrl, papayaAddress }: IContructor) {
-        super(rpcUrl);
+    constructor({ provider, papayaAddress }: IContructor) {
+        super(provider);
         this.contract = this.getContract(
             papayaABI.abi,
             papayaAddress,

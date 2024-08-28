@@ -1,5 +1,5 @@
 import { constants } from "@1inch/solidity-utils";
-import { ethers, JsonRpcSigner, Wallet } from "ethers";
+import { ethers, JsonRpcProvider, JsonRpcSigner, Wallet } from "ethers";
 import { createPermit } from "./utils";
 import papayaABI from "./abi/Papaya.json";
 import erc20PermitABI from "./abi/ERC20Permit.json";
@@ -10,7 +10,7 @@ interface IContructor {
     tokenAddress: `0x${string}`;
     chainId: number;
     secretKey?: `0x${string}`;
-    rpcUrl?: string;
+    provider?: JsonRpcProvider;
 }
 
 export class PapayaBySigInteraction extends PapayaAbstract {
@@ -25,13 +25,13 @@ export class PapayaBySigInteraction extends PapayaAbstract {
     private secretKey: `0x${string}` | undefined;
 
     constructor({
-        rpcUrl,
+        provider,
         papayaAddress,
         tokenAddress,
         chainId,
         secretKey,
     }: IContructor) {
-        super(rpcUrl);
+        super(provider);
         this.papayaAddress = papayaAddress;
         this.tokenAddress = tokenAddress;
         this.secretKey = secretKey;

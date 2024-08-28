@@ -1,13 +1,20 @@
-import { BrowserProvider, ethers } from "ethers";
+import { BrowserProvider, ethers, JsonRpcProvider } from "ethers";
 import { isNode } from "./utils";
 
 export abstract class PapayaAbstract {
     protected provider: ethers.Provider;
 
-    constructor(rpcUrl?: string) {
-        if (isNode()) this.provider = new ethers.JsonRpcProvider(rpcUrl);
+    constructor(provider?: JsonRpcProvider) {
+        if (provider) this.provider = provider;
         //@ts-expect-error there is no window.ethereum in nodejs env
-        else this.provider = new ethers.BrowserProvider(window.ethereum);
+        else if (window.ethereum) {
+            //@ts-expect-error there is no window.ethereum in nodejs env
+            this.provider = new ethers.BrowserProvider(window.ethereum);
+        } else {
+            throw Error(
+                "No provider specified and no browser provider was found"
+            );
+        }
     }
 
     protected getContract(
