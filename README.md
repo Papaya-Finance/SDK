@@ -6,6 +6,8 @@
 npm install @papaya-finance/sdk
 ```
 
+## Examples
+
 ###### Subscribe example
 
 ```ts
